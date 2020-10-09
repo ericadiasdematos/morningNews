@@ -6,7 +6,7 @@ import {connect} from 'react-redux'
 
 function ScreenHome(props) {
 
-  const [articles, setArticles] = useState([]);
+  
   
   
 

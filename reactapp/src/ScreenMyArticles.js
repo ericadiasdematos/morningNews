@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import { Card, Icon, Modal} from 'antd';
 import Nav from './Nav'
@@ -11,6 +11,7 @@ function ScreenMyArticles(props) {
   const [visible, setVisible] = useState(false)
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
+  const [articles, setArticles] = useState([]);
 
   useEffect(() => {
     const findArticles = async() => {
@@ -58,7 +59,7 @@ function ScreenMyArticles(props) {
             <div className="Card">
     
 
-            {props.myArticles.map((article,i) => (
+            {articles.map((article,i) => (
                 <div key={i} style={{display:'flex',justifyContent:'center'}}>
 
                   <Card
