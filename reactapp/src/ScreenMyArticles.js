@@ -54,10 +54,28 @@ function ScreenMyArticles(props) {
     noArticles = <div style={{marginTop:"30px"}}>No Articles</div>
   }
 
+  var styleImages={
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+  }
+
+  var styleEachImg={
+    width: '40px',
+    margin: '10px'
+  }
+
   return (
     <div>
             <Nav/>
-            <div className="Banner"/>
+            <div className="Banner" style={styleImages}>
+              <div>
+                <img src="images/fr.png" alt="Français" style={styleEachImg} onClick={ ()=> props.onChangeLanguage('fr')} />
+              </div>
+              <div>
+                <img src="images/uk.png" alt="English" style={styleEachImg} onClick={ ()=> props.onChangeLanguage('en')} />
+              </div>
+            </div>
             {noArticles}
             <div className="Card">
             {articles.map((article,i) => (
@@ -107,9 +125,11 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
   return {
     deleteToWishList: function(articleTitle){
-      dispatch({type: 'deleteArticle',
-        title: articleTitle
-      })
+      dispatch({type: 'deleteArticle', title: articleTitle})
+      
+    },
+    onChangeLanguage:  function(language){
+      dispatch({type: 'changeLang', selectedLang: language})
     }
   }
 }
