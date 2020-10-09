@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema({
     password: String,
     token: String,
     salt: String, 
-    likedArticles: likedArticlesSchema,
+    likedArticles: [likedArticlesSchema],
 
 })
 
