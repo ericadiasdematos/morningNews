@@ -98,18 +98,21 @@ router.post('/sign-in', async function(req,res,next){
 
 router.post('/add-article', async function(req, res, next) {
   
-  const data = await userModel.updateOne(
-    {token: 'uktARPcs2sCx38XZaw0nKpYz4gVy12xk' },
-    {likedArticles: [{
-      title: req.body.articleTitleFromFront,
-      desc: req.body.articleDescFromFront,
-      content: req.body.articleContentFromFront,
-      image: req.body.articleImgFromFront,
-      link: req.body.articleLinkFromFront,
-    }]}
-    );
+  const user = await userModel.findOne(
+    {token: 'AEAELTulHqHdQaqFUrKR2VEhAGYlW5im' });
+    console.log('user', user);
+    console.log(req.body)
+  user.likedArticles.push({
+    title: req.body.articleTitleFromFront,
+    desc: req.body.articleDescFromFront,
+    content: req.body.articleContentFromFront,
+    image: req.body.articleImgFromFront,
+    link: req.body.articleLinkFromFront,
+  })
 
-  res.json({data})
+  var userSaved = await user.save();
+
+  res.json({userSaved});
 })
 
 module.exports = router;
