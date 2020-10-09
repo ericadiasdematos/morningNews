@@ -8,16 +8,7 @@ function ScreenHome(props) {
 
   const [articles, setArticles] = useState([]);
   
-  useEffect(() => {
-    const findArticles = async() => {
-      const data = await fetch(`/get-articles?tokenFromFront=${props.token}`);
-      const body = await data.json()
-      
-      setArticles(body) 
-    }
-
-    findArticles()    
-  },[])
+  
 
   const [signUpUsername, setSignUpUsername] = useState('')
   const [signUpEmail, setSignUpEmail] = useState('')

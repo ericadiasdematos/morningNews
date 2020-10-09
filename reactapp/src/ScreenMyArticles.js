@@ -12,6 +12,16 @@ function ScreenMyArticles(props) {
   const [title, setTitle] = useState('')
   const [content, setContent] = useState('')
 
+  useEffect(() => {
+    const findArticles = async() => {
+      const data = await fetch(`/get-articles?tokenFromFront=${props.tokenToDisplay}`);
+      const body = await data.json()
+      
+      setArticles(body) 
+    }
+
+    findArticles()    
+  },[])
 
 
   var showModal = (title, content) => {
@@ -105,7 +115,7 @@ function ScreenMyArticles(props) {
 }
 
 function mapStateToProps(state){
-  return {myArticles: state.wishList}
+  return {myArticles: state.wishList, tokenToDisplay: state.token}
 }
 
 function mapDispatchToProps(dispatch){
