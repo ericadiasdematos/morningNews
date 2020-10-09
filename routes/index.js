@@ -131,9 +131,9 @@ router.get('/get-articles', async function(req, res, next) {
 
 
 
-router.delete('/delete-article/:id', async function(req, res, next){
+router.delete('/delete-article/:id/:token', async function(req, res, next){
   const user = await userModel.findOne(
-    {token: req.body.tokenFromFront});
+    {token: req.params.token});
 
     user.likedArticles.filter(article => article._id != req.params.id)
      
