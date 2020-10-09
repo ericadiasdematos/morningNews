@@ -43,7 +43,7 @@ function ScreenMyArticles(props) {
   }
 
   var noArticles
-  if(props.myArticles == 0){
+  if(articles == 0){
     noArticles = <div style={{marginTop:"30px"}}>No Articles</div>
   }
 
@@ -73,7 +73,7 @@ function ScreenMyArticles(props) {
                     cover={
                     <img
                         alt="example"
-                        src={article.urlToImage}
+                        src={article.image}
                     />
                     }
                     actions={[
