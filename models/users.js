@@ -6,6 +6,7 @@ const likedArticlesSchema = mongoose.Schema({
     content: String,
     image: String,
     link: String,
+    lang: String,
 })
 
 const userSchema = mongoose.Schema({

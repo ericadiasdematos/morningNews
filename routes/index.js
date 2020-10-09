@@ -99,7 +99,7 @@ router.post('/sign-in', async function(req,res,next){
 router.post('/add-article', async function(req, res, next) {
   
   const user = await userModel.findOne(
-    {token: 'AEAELTulHqHdQaqFUrKR2VEhAGYlW5im' });
+    {token:  req.body.tokenFromFront});
     console.log('user', user);
     console.log(req.body)
   user.likedArticles.push({
@@ -108,11 +108,13 @@ router.post('/add-article', async function(req, res, next) {
     content: req.body.articleContentFromFront,
     image: req.body.articleImgFromFront,
     link: req.body.articleLinkFromFront,
+    lang: req.body.langueFromFront,
   })
 
   var userSaved = await user.save();
 
   res.json({userSaved});
 })
+
 
 module.exports = router;
