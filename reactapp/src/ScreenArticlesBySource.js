@@ -42,6 +42,18 @@ function ScreenArticlesBySource(props) {
     setVisible(false)
   }
 
+
+  let addArticleToBdd = async (article) => {
+    props.addToWishList(article);
+    const data = await fetch('/add-article', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+      body: `tokenFromFront=${props.tokenToDisplay}&langueFromFront=${props.langToDisplay}&articleTitleFromFront=${article.title}&articleDescFromFront=${article.description}&articleContentFromFront=${article.content}&articleImgFromFront=${article.urlToImage}&articleLinkFromFront=${article.url}`
+    })
+
+    const body = await data.json()
+  }
+
   return (
     <div>
          
@@ -69,7 +81,7 @@ function ScreenArticlesBySource(props) {
                   }
                   actions={[
                       <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title,article.content)} />,
-                      <Icon type="like" key="ellipsis" onClick={()=> {props.addToWishList(article)}} />
+                      <Icon type="like" key="ellipsis" onClick={()=> {addArticleToBdd(article)}} />
                   ]}
                   >
 
@@ -104,6 +116,10 @@ function ScreenArticlesBySource(props) {
   );
 }
 
+function mapStateToProps(state){
+  return {tokenToDisplay: state.token, langToDisplay: state.selectedLang}
+}
+
 function mapDispatchToProps(dispatch){
   return {
     addToWishList: function(article){
@@ -115,6 +131,6 @@ function mapDispatchToProps(dispatch){
 }
 
 export default connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
 )(ScreenArticlesBySource)
