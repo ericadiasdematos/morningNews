@@ -1,10 +1,23 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './App.css';
 import {Input,Button} from 'antd';
 import {Link, Redirect} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 function ScreenHome(props) {
+
+  const [articles, setArticles] = useState([]);
+  
+  useEffect(() => {
+    const findArticles = async() => {
+      const data = await fetch(`/get-articles?tokenFromFront=${props.token}`);
+      const body = await data.json()
+      
+      setArticles(body) 
+    }
+
+    findArticles()    
+  },[])
 
   const [signUpUsername, setSignUpUsername] = useState('')
   const [signUpEmail, setSignUpEmail] = useState('')
