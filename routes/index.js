@@ -53,7 +53,7 @@ router.post('/sign-up', async function(req,res,next){
   
 
   res.json({result, saveUser, error, token})
-})
+});
 
 router.post('/sign-in', async function(req,res,next){
 
@@ -89,12 +89,9 @@ router.post('/sign-in', async function(req,res,next){
       error.push('email incorrect')
     }
   }
-  
 
   res.json({result, user, error, token})
-
-
-})
+});
 
 router.post('/add-article', async function(req, res, next) {
   
@@ -109,12 +106,27 @@ router.post('/add-article', async function(req, res, next) {
     image: req.body.articleImgFromFront,
     link: req.body.articleLinkFromFront,
     lang: req.body.langueFromFront,
-  })
+  });
 
   var userSaved = await user.save();
 
   res.json({userSaved});
-})
+});
 
+
+router.get('/get-articles', async function(req, res, next) {
+  let userArticles = [];
+
+  const user = await userModel.findOne(
+    {token:  req.query.tokenFromFront});
+
+  if(user!=null){  
+    userArticles = user.likedArticles;
+    res.json(userArticles);
+  }else{
+    res.json("no articles found");
+  }
+ 
+});
 
 module.exports = router;
