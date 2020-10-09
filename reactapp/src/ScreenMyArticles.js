@@ -27,6 +27,7 @@ function ScreenMyArticles(props) {
       method: 'DELETE'
     });
     let body = await delet.json();
+    console.log(body);
     setArticles(body);
   }
 

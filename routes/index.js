@@ -135,11 +135,18 @@ router.delete('/delete-article/:id/:token', async function(req, res, next){
   const user = await userModel.findOne(
     {token: req.params.token});
 
-    user.likedArticles.filter(article => article._id != req.params.id)
+    console.log("token id",req.params.token ,req.params.id )
+
+
+    let array = [...user.likedArticles.filter((article) => (article._id != req.params.id))];
+    user.likedArticles = array ;
+
+    console.log("user afterFilter",user)
      
     var userSaved = await user.save();
+    
   
-  res.json({userSaved})
+  res.json(userSaved.likedArticles);
 })
 
 module.exports = router;
