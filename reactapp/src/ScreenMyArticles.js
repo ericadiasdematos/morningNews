@@ -16,20 +16,24 @@ function ScreenMyArticles(props) {
   useEffect(() => {
     const findArticles = async() => {
       const data = await fetch(`/get-articles?tokenFromFront=${props.tokenToDisplay}`);
-      const body = await data.json()
-      
-      setArticles(body) 
+      const body = await data.json();
+      setArticles(body); 
     }
-
     findArticles()    
-  },[])
+  },[]);
+
+  let deleteArticle = async (article)=>{
+    let delet = await fetch(`/delete-articles/${article._id}`);
+    let body = await delet.json();
+    setArticles(body);
+  }
+
 
 
   var showModal = (title, content) => {
     setVisible(true)
     setTitle(title)
     setContent(content)
-
   }
 
   var handleOk = e => {
@@ -49,21 +53,13 @@ function ScreenMyArticles(props) {
 
   return (
     <div>
-         
             <Nav/>
-
             <div className="Banner"/>
-
             {noArticles}
-
             <div className="Card">
-    
-
             {articles.map((article,i) => (
                 <div key={i} style={{display:'flex',justifyContent:'center'}}>
-
                   <Card
-                    
                     style={{ 
                     width: 300, 
                     margin:'15px', 
@@ -78,15 +74,13 @@ function ScreenMyArticles(props) {
                     }
                     actions={[
                         <Icon type="read" key="ellipsis2" onClick={() => showModal(article.title,article.content)} />,
-                        <Icon type="delete" key="ellipsis" onClick={() => props.deleteToWishList(article.title)} />
+                        <Icon type="delete" key="ellipsis" onClick={() => deleteArticle(article)} />
                     ]}
                     >
-
                     <Meta
                       title={article.title}
                       description={article.description}
                     />
-
                   </Card>
                   <Modal
                     title={title}
@@ -96,21 +90,9 @@ function ScreenMyArticles(props) {
                   >
                     <p>{title}</p>
                   </Modal>
-
                 </div>
-
               ))}
-
-
-
-       
-
-                
-
              </div>
-      
- 
-
       </div>
   );
 }
@@ -128,8 +110,6 @@ function mapDispatchToProps(dispatch){
     }
   }
 }
-
-
 
 export default connect(
   mapStateToProps,
