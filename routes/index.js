@@ -129,4 +129,17 @@ router.get('/get-articles', async function(req, res, next) {
  
 });
 
+
+
+router.delete('/delete-article/:id', async function(req, res, next){
+  const user = await userModel.findOne(
+    {token: req.body.tokenFromFront});
+
+    user.likedArticles.filter(article => article._id != req.params.id)
+     
+    var userSaved = await user.save();
+  
+  res.json({userSaved})
+})
+
 module.exports = router;
