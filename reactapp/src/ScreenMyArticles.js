@@ -23,7 +23,9 @@ function ScreenMyArticles(props) {
   },[]);
 
   let deleteArticle = async (article)=>{
-    let delet = await fetch(`/delete-articles/${article._id}`);
+    let delet = await fetch(`/delete-article/${article._id}/${props.tokenToDisplay}`,{
+      method: 'DELETE'
+    });
     let body = await delet.json();
     setArticles(body);
   }
