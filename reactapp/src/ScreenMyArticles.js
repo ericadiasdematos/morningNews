@@ -64,6 +64,13 @@ function ScreenMyArticles(props) {
     width: '40px',
     margin: '10px'
   }
+  let articlesLang = articles;
+  if(props.langueToDisplay=='fr'){
+    articlesLang = [...articles].filter((e)=>(e.lang=='fr'));
+  }else if(props.langueToDisplay=='en'){
+    articlesLang = [...articles].filter((e)=>(e.lang=='en'));
+  }
+
 
   return (
     <div>
@@ -78,7 +85,7 @@ function ScreenMyArticles(props) {
             </div>
             {noArticles}
             <div className="Card">
-            {articles.map((article,i) => (
+            {articlesLang.map((article,i) => (
                 <div key={i} style={{display:'flex',justifyContent:'center'}}>
                   <Card
                     style={{ 
@@ -109,7 +116,7 @@ function ScreenMyArticles(props) {
                     onOk={handleOk}
                     onCancel={handleCancel}
                   >
-                    <p>{title}</p>
+                    <p>{content}</p>
                   </Modal>
                 </div>
               ))}
@@ -119,7 +126,7 @@ function ScreenMyArticles(props) {
 }
 
 function mapStateToProps(state){
-  return {myArticles: state.wishList, tokenToDisplay: state.token}
+  return {langueToDisplay : state.selectedLang, tokenToDisplay: state.token}
 }
 
 function mapDispatchToProps(dispatch){
